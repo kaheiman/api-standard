@@ -1,0 +1,113 @@
+swagger: '2.0'
+info:
+  version: "v1"
+  title: 'Bulk Operation sample'
+  description: 'Sample file for API Standads spec'
+
+# Added by API Auto Mocking Plugin
+host: virtserver.swaggerhub.com
+basePath: /bulk/v1
+schemes:
+ - https
+ 
+consumes:
+- application/json
+
+produces:
+- application/json
+
+paths:
+  '/messages:batchDelete':
+    post:
+      description: Delete multiple messages
+      parameters: 
+       - name: idArray
+         in: body
+         required: true
+         description: An array of resource IDs
+         schema:
+           type: array
+           items: 
+             $ref: '#/definitions/GUID'     
+      responses:
+        200: 
+          description: Successfully deleted messages
+        400:
+          description: Too many IDs
+          schema:
+            $ref: '#/definitions/ApiError'
+        404:
+          description: Message ID(s) not found
+          schema:
+            $ref: '#/definitions/ApiError'
+  '/messages:batchCreate':
+    post:
+      description: Create multiple messages
+      parameters: 
+       - name: messageData
+         in: body
+         required: true
+         description: An array of message data
+         schema:
+           type: array
+           items: 
+             $ref: '#/definitions/Message'     
+      responses:
+        201: 
+          description: Successfully created messages
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/NewMessage'
+        400:
+          description: Too many messages
+          schema:
+            $ref: '#/definitions/ApiError'
+        404:
+          description: User ID(s) not found
+          schema:
+            $ref: '#/definitions/ApiError'
+          
+definitions:
+  GUID:
+    type: string
+    
+  Message:
+    type: object
+    required:
+      - userID
+      - content
+    properties:
+      userID: 
+        $ref: '#/definitions/GUID'
+      content: 
+        type: string
+  
+  NewMessage:
+    type: object
+    required:
+      - messageID
+      - userID
+      - content
+    properties:
+      messageID:
+        $ref: '#/definitions/GUID'        
+      userID: 
+        $ref: '#/definitions/GUID'
+      content: 
+        type: string
+        
+  ApiError:
+    type: object
+    required:
+      - code
+      - title
+    properties:
+      type:
+        type: string
+      title:
+        type: string
+      detail:
+        type: string
+      id:
+        $ref: '#/definitions/GUID'

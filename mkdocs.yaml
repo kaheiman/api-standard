@@ -1,0 +1,35 @@
+
+site_name: 'Autodesk REST API Standards'
+site_description: 'REST API Standards'
+
+plugins:
+  - techdocs-core
+
+nav:
+  - Core Principles: 'Core_Principles.md'
+  - Resource Oriented Design: 'Resource_Oriented_Design.md'
+  - Resource Names: 'Resource_Names.md'
+  - Standard Methods: 'Standard_Methods.md'
+  - Custom Methods: 'Custom_Methods.md'
+  - Collection Resources:
+      - Collection Resources: 'Collection_Resources.md'
+      - Pagination: 'Pagination.md'
+      - Filtering: 'Filtering.md'
+      - Sorting: 'Sorting.md'
+  - Bulk Operations: 'Bulk_Operations.md'
+  - Error Responses: 'Error_Responses.md'
+  - MIME Types: 'MIME_Types.md'
+  - Response Status Codes: 'Response_Status_Codes.md'
+  - API Versioning: 'API_Versioning.md'
+  - Naming Conventions: 'Naming_Conventions.md'
+  - Common Data Types: 'Common_Data_Types.md'
+  - Standard Fields: 'Standard_Fields.md'
+  - Localization: 'Localization.md'
+  - HATEOAS: 'HATEOAS.md'
+  - Links in responses: 'Links.md'
+  - Asynchronous Tasks: 'Async_Tasks.md'
+  - URNs: 'URNs.md'
+  - Caching: 'Caching.md'
+  - Separate Concerns: 'Separate_Concerns.md'
+  - Help, Contributing and Feedback: 'Help.md'
+  - Credits: 'Credits.md'

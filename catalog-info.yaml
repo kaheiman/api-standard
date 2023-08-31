@@ -1,0 +1,12 @@
+apiVersion: backstage.io/v1alpha1
+kind: Location
+metadata:
+  name: rest-api-standards
+  title: REST API Standards
+  description: REST API standards that are required for all Autodesk Platform Services
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    autodesk.com/featured-docs: standards
+spec:
+  owner: scott.morrison
+  type: documentation

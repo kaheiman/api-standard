@@ -1,0 +1,148 @@
+swagger: '2.0'
+info:
+  version: 'v1'
+  title: 'Sub-resource includes'
+  description: 'Example of handling sub-resource includes with overflow handling.'
+
+# Added by API Auto Mocking Plugin
+host: swaggerhub.autodesk.com
+basePath: /virts/scm/IncludeExample/v1
+schemes:
+ - https
+ 
+paths:
+  /issues:
+    get:
+      summary: Get a list of issues
+      parameters:
+      - name: include
+        in: query
+        description: The sub-resources to include in the response. A comma-separated list 
+            of one or both of 'comments' and 'attachments'
+        required: false
+        type: string
+      responses:
+        200:
+          description: Success.
+          schema:
+            $ref: '#/definitions/IssuesResponse'
+        400:
+          description: Failure.
+          schema:
+            $ref: '#/definitions/ApiError'
+              
+definitions:
+  Issue:
+    type: object
+    required:
+      - id
+      - userId
+      - text
+    properties:
+      id:
+        description: The GUID identifier for the issue
+        type: string
+      userId: 
+        description: The user id of the creator of this issue.
+        type: string
+      text:
+        description: The content of the issue.
+        type: string
+      comments:
+        description: Array of comments on the issue, if requested with 'include'.
+        type: array
+        items:
+          $ref: '#/definitions/Comment'
+      attachments:
+        description: Array of attachments on the issue, if requested with 'include'      
+        type: array
+        items:
+          $ref: '#/definitions/Attachment'
+      overflows:
+        description: If the included comments or attachments are too big, this contains
+          a link to get the rest.
+        $ref: '#/definitions/Overflows'
+          
+  Overflows:
+    type: object
+    properties:
+      comments:
+        description: Link to the comments for this issue
+        type: string
+      attachments  :
+        description: Link to the attachments for this issue
+        type: string
+            
+  Comment:
+    type: object
+    required:
+      - id
+      - userId
+      - text
+    properties:
+      id:
+        description: The GUID identifier for the comment
+        type: string
+      userId: 
+        description: The user id of the creator of this comment.
+        type: string
+      text:
+        description: The content of the comment.
+        type: string 
+        
+  Attachment:
+    type: object
+    required:
+      - id
+      - userId
+      - attachmentUrl
+    properties:
+      id:
+        description: The GUID identifier for the attachment.
+        type: string
+      userId: 
+        description: The user id of the creator of this attachment.
+        type: string      
+      attachmentUrl:
+        description: The URL of the attached resource.
+        
+  Pagination:
+    type: object
+    required:
+      - limit
+      - offset
+      - totalResults
+    properties:
+      limit:
+        type: integer
+      offset:
+          type: integer
+      totalResults:
+        type: integer
+      next:
+        type: string
+        
+  IssuesResponse:
+    type: object
+    required:
+      - results
+    properties:
+      results:
+        type: array
+        items:
+          $ref: '#/definitions/Issue'
+      pagination:
+          $ref: '#/definitions/Pagination'
+          
+  ApiError:
+    type: object
+    required:
+      - type
+      - title
+    properties:
+      title:
+        type: string
+      detail:
+        type: string
+      type:
+        type: string

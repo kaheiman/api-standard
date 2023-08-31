@@ -1,0 +1,81 @@
+---
+swagger: '2.0'
+info:
+  title: Forge API Standards API
+  version: v1
+  description: Sample API
+host: example.com
+schemes:
+- https
+consumes:
+- application/json
+produces:
+- application/json
+securityDefinitions: {}
+
+paths:
+  "/books":
+    get:
+      description: Get the collection of books.
+      summary: Get the books in the store.
+      operationId: getBooks
+      parameters:
+      - in: query
+        name: filter[title]
+        type: string
+        description: Filter books by title.
+      - in: query
+        name: filter[price]
+        type: number
+        description: Filter books by price, in dollars. This may be a number or a
+          range. Ranges can be **lowerValue..upperValue**, **lowerValue..** or **..upperValue**.
+          The range tests are always inclusive of their endpoints.
+      responses:
+        '200':
+          description: An array of book objects.
+          schema:
+            type: array
+            items:
+              "$ref": "#/definitions/Book"
+        '400':
+          "$ref": "#/responses/ApiError"
+
+definitions:
+  Book:
+    type: object
+    title: Book
+    description: The data for a book in the store
+    properties:
+      title:
+        type: string
+        example: Great Expectations
+        description: Title of the book
+      price:
+        type: number
+        default: 0
+        example: 10
+        description: Price of the book in dollars.
+      ISBN:
+        type: string
+        description: International Standard Book Number
+    required:
+    - title
+  ErrorDetails:
+    type: object
+    title: ErrorDetails
+    description: Detailed description of errors.
+    properties:
+      type:
+        type: string
+        description: Link to error details
+      title:
+        type: string
+        description: Short description of error
+      details:
+        type: string
+        description: Detailed description of error.
+responses:
+  ApiError:
+    description: Destailed description of API error result.
+    schema:
+      "$ref": "#/definitions/ErrorDetails"
